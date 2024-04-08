@@ -21,12 +21,21 @@ data['MA50'] = data['Close'].rolling(50).mean()
 data['MA200'] = data['Close'].rolling(200).mean()
 
 # Plotting stock prices with moving averages
-plt.figure(figsize=(16, 8))
-plt.plot(data['Close'], label='GOOGL Close Price')
-plt.plot(data['MA50'], label='50 Day MA')
-plt.plot(data['MA200'], label='200 Day MA')
-plt.legend()
-plt.show()
+# Crear la figura con los datos de cierre y medias móviles
+trace1 = go.Scatter(x=data.index, y=data['Close'], mode='lines', name='Precio de cierre de AAPL')
+trace2 = go.Scatter(x=data.index, y=data['MA50'], mode='lines', name='MA de 50 días')
+trace3 = go.Scatter(x=data.index, y=data['MA200'], mode='lines', name='MA de 200 días')
+
+# Crear el diseño de la figura
+layout = go.Layout(title='Precios de cierre de AAPL con Medias Móviles',
+                   xaxis=dict(title='Fecha'),
+                   yaxis=dict(title='Precio'))
+
+# Crear la figura
+fig = go.Figure(data=[trace1, trace2, trace3], layout=layout)
+
+# Mostrar la figura
+plot(fig)
 
 # Preprocessing for Linear Regression and k-Nearest Neighbors
 data.reset_index(inplace=True)
